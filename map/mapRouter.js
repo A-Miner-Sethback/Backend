@@ -21,8 +21,8 @@ router.get('/:userId', restricted, (req, res) =>
 
 router.post('/:userId', restricted, (req, res) =>
 {
-
-    Mappy.add()
+    room = req.body.room
+    Mappy.add(room)
         .then(response =>
         {
             Mappy.addUser(response.id, req.params.userId)
@@ -46,6 +46,20 @@ router.post('/:userId', restricted, (req, res) =>
             {
                 res.status(500).json({ errorMessage: `Internal Error: Could not add user ${req.params.userId} to room ${error}` })
             })
+        })
+})
+
+router.put('/:userId', restricted, (req, res) =>
+{
+    room = req.body.room
+    Mappy.updateRoom(room)
+        .then(response =>
+        {
+            res.status(200).json(response)
+        })
+        .catch(error =>
+        {
+            res.status(500).json(error)
         })
 })
 

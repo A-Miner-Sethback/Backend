@@ -5,7 +5,8 @@ module.exports =
     add,
     findById,
     addUser,
-    getAllforUser
+    getAllforUser,
+    updateRoom
 }
 
 function findById(id) { return db('rooms').where({id}).first() }
@@ -46,4 +47,10 @@ async function getAllforUser(userId)
     {
         return error
     }
+}
+
+async function update(room)
+{
+    await db('rooms').where({'id': room.id}).update(room)
+    return findById(room.id)
 }
