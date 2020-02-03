@@ -11,13 +11,18 @@ exports.up = function(knex) {
     .createTable('rooms', tbl =>
     {
         tbl.integer('id').unsigned().unique()
-        tbl.string('name', 256)
+        tbl.string('title', 256)
         tbl.string('description', 2000)
         // tbl.string('treasure', 2000)
         tbl.integer('n_to').defaultTo(-1)
         tbl.integer('e_to').defaultTo(-1)
         tbl.integer('s_to').defaultTo(-1)
         tbl.integer('w_to').defaultTo(-1)
+
+        tbl.integer('x')
+        tbl.integer('y')
+        
+        tbl.string('special', 500).defaultTo(null)
 
         tbl.primary('id')
     })
