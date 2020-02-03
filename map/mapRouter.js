@@ -48,3 +48,5 @@ router.post('/:userId', restricted, (req, res) =>
             })
         })
 })
+
+module.exports = router
