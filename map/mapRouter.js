@@ -36,7 +36,16 @@ router.post('/:userId', restricted, (req, res) =>
             })
             .catch(err =>
             {
-                res.status(500).json({ errorMessage: `Internal Error: Could not add user ${req.params.userId} to room ${response.id}` })
+                Mappy.getAllforUser(req.params.userId)
+                .then(resp3 =>
+                {
+                    res.status(200).json(resp3)
+                })
+                .catch(errorrr =>
+                {
+                    res.status(500).json({errorMessage: 'No'})
+                })
+                // res.status(500).json({ errorMessage: `Internal Error: Could not add user ${req.params.userId} to room ${response.id}` })
             })
         })
         .catch(error =>
@@ -52,7 +61,16 @@ router.post('/:userId', restricted, (req, res) =>
             })
             .catch(err =>
             {
-                res.status(500).json({ errorMessage: `Internal Error: Could not add user ${req.params.userId} to room ${error}` })
+                Mappy.getAllforUser(req.params.userId)
+                .then(resp3 =>
+                {
+                    res.status(200).json(resp3)
+                })
+                .catch(errorrr =>
+                {
+                    res.status(500).json({errorMessage: 'No'})
+                })
+                // res.status(500).json({ errorMessage: `Internal Error: Could not add user ${req.params.userId} to room ${error}` })
             })
         })
 })
