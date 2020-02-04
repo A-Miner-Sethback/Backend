@@ -41,7 +41,12 @@ async function getAllforUser(userId)
     {
         rooms = await db('users_rooms').where({'user_id': userId, visited: true})
         detailedRooms = []
-        rooms.forEach(el => detailedRooms.push(findById(el.id)))
+        for(let i = 0; i<rooms.length; i++)
+        {
+            detailedRoom = await findById(el.id)
+            detailedRooms.push(detailedRoom)
+        }
+        
         return detailedRooms
     }
     catch(error)
