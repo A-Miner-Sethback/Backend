@@ -6,7 +6,8 @@ module.exports =
     findById,
     addUser,
     getAllforUser,
-    updateRoom
+    updateRoom,
+    travel
 }
 
 function findById(id) { return db('rooms').where({id}).first() }
@@ -53,4 +54,27 @@ async function updateRoom(room)
 {
     await db('rooms').where({'id': room.id}).update(room)
     return findById(room.id)
+}
+
+async function travel(prevRoom, curRoom, direction, userId)
+{
+    let revDict = {'n': 's_to', 'e': 'w_to', 's': 'n_to', 'w': 'e_to'}
+    try
+    {
+        await add(curRoom)
+        await addUser(curRoom.id, userId)
+        let pRoom = await findById(prevRoom.id)
+        let cRoom = await findById(curRoom.id)
+        pRoom[`${direction}_to`] = cRoom.id
+        cRoom[revDict[direction]] = pRoom.id
+
+        await updateRoom(pRoom)
+        await updateRoom(cRoom)
+        
+        return getAllforUser(userId)
+    }
+    catch(error)
+    {
+        return 0
+    }
 }

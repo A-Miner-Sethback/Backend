@@ -49,6 +49,20 @@ router.post('/:userId', restricted, (req, res) =>
         })
 })
 
+router.post('/:userId/travel', restricted, (req, res) =>
+{
+    let {curRoom, prevRoom, direction} = req.body
+    Mappy.travel(prevRoom, curRoom, direction)
+        .then(response =>
+        {
+            res.status(200).json(response)
+        })
+        .catch(error =>
+        {
+            res.status(500).json({errorMessage: 'ERROR, something something travel problem'})
+        })
+})
+
 router.put('/:userId', restricted, (req, res) =>
 {
     room = req.body.room
