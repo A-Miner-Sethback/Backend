@@ -35,7 +35,7 @@ router.post('/register', duplicateUser, (req, res) =>
                                         if(response)
                                         {
                                             const token = generateToken(user)
-                                            res.status(201).json({ id: user.id, username: user.username, token: token })
+                                            res.status(201).json({ userId: user.id, username: user.username, token: token })
                                         }
                                         else res.status(401).json({ errorMessage: 'Invalid Credentials' })
                                     })
