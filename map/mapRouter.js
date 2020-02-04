@@ -21,7 +21,8 @@ router.get('/:userId', restricted, (req, res) =>
 
 router.post('/:userId', restricted, (req, res) =>
 {
-    room = req.body.room
+    let room = req.body.room
+    console.log('room', room)
     Mappy.add(room)
         .then(response =>
         {
@@ -31,6 +32,7 @@ router.post('/:userId', restricted, (req, res) =>
                 Mappy.getAllforUser(req.params.userId)
                 .then(resp3 =>
                 {
+                    console.log('resp3', resp3)
                     res.status(200).json(resp3)
                 })
             })
@@ -39,6 +41,7 @@ router.post('/:userId', restricted, (req, res) =>
                 Mappy.getAllforUser(req.params.userId)
                 .then(resp3 =>
                 {
+                    console.log('resp3', resp3)
                     res.status(200).json(resp3)
                 })
                 .catch(errorrr =>
@@ -78,9 +81,11 @@ router.post('/:userId', restricted, (req, res) =>
 router.post('/:userId/travel', restricted, (req, res) =>
 {
     let {curRoom, prevRoom, direction} = req.body
-    Mappy.travel(prevRoom, curRoom, direction)
+    console.log('curRoom', curRoom)
+    Mappy.travel(prevRoom, curRoom, direction, req.params.userId)
         .then(response =>
         {
+            console.log('response from travel', response)
             res.status(200).json(response)
         })
         .catch(error =>

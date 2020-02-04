@@ -36,6 +36,7 @@ exports.up = function(knex) {
             .inTable('users')
             .onDelete('CASCADE')
             .onUpdate('CASCADE')
+            .notNullable()
         tbl
             .integer('room_id')
             .unsigned()
@@ -43,6 +44,7 @@ exports.up = function(knex) {
             .inTable('rooms')
             .onDelete('CASCADE')
             .onUpdate('CASCADE')
+            .notNullable()
 
         tbl.primary(['user_id', 'room_id'])
     })
