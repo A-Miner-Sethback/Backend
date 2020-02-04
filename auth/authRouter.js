@@ -19,32 +19,34 @@ router.post('/register', duplicateUser, (req, res) =>
     else
     {
         let {username, password} = req.body
+        //TODO: inform FE if username is taken
         bcryptjs.genSalt(hashCount, function(err, salt)
         {
             bcryptjs.hash(password, salt, function(err, hash)
             {
                 Users.add({username, password: hash})
-                .then(response =>
-                {
-                    Users.findBy({username: response.username}).first()
-                    .then(user =>
-                    {
-                        bcryptjs.compare(password, user.password, function(err, response)
+                    .then(response =>
                         {
-                            if(response)
-                            {
-                                const token = generateToken(user)
-                                res.status(201).json({id: user.id, username: user.username, token: token})
-                            }
-                            else res.status(401).json({errorMessage: 'Invalid Credentials'})
+                            Users.findBy({ username: response.username }).first()
+                            .then(user =>
+                                {
+                                    bcryptjs.compare(password, user.password, function(err, response)
+                                    {
+                                        if(response)
+                                        {
+                                            const token = generateToken(user)
+                                            res.status(201).json({ id: user.id, username: user.username, token: token })
+                                        }
+                                        else res.status(401).json({ errorMessage: 'Invalid Credentials' })
+                                    })
+                                })
                         })
-                    })
-                })
+                    .catch(error =>
+                        {
+                            res.status(500).json({ errorMessage: `Internal Error: Could not register user` })
+                            // res.status(500).json(error)
+                        })
             })
-        })
-        .catch(error =>
-        {
-            res.status(500).json({ errorMessage: `Internal Error: Could not add user` })
         })
     }
 })
