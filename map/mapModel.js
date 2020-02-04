@@ -49,7 +49,7 @@ async function getAllforUser(userId)
     }
 }
 
-async function update(room)
+async function updateRoom(room)
 {
     await db('rooms').where({'id': room.id}).update(room)
     return findById(room.id)
