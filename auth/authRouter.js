@@ -71,7 +71,7 @@ router.post('/login', (req, res) =>
                             if(response)
                             {
                                 const token = generateToken(user)
-                                res.status(200).json({ token })
+                                res.status(200).json({ token, userId: user.id, username })
                             }
                             else res.status(401).json({ errorMessage: 'Invalid Credentials' })
                         })
