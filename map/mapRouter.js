@@ -28,7 +28,11 @@ router.post('/:userId', restricted, (req, res) =>
             Mappy.addUser(response.id, req.params.userId)
             .then(resp =>
             {
-                res.status(201).json(resp)
+                Mappy.getAllforUser(req.params.userId)
+                .then(resp3 =>
+                {
+                    res.status(201).json(resp)
+                })
             })
             .catch(err =>
             {
