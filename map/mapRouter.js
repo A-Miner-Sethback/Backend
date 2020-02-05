@@ -21,8 +21,9 @@ router.get('/:userId', restricted, (req, res) =>
 
 router.post('/:userId', restricted, (req, res) =>
 {
-    let room = req.body.room
+    let room = req.body
     console.log('room', room)
+    
     Mappy.add(room)
         .then(response =>
         {
