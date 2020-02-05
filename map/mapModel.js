@@ -107,9 +107,9 @@ async function travel(prevRoom, curRoom, direction, userId)
     {
         // console.log('cur room', curRoom)
         let addedRoom = await add(curRoom)
-        console.log('addedRoom', addedRoom)
+        // console.log('addedRoom', addedRoom)
         let added = await addUser(curRoom.room_id, userId)
-        console.log('b', added)
+        // console.log('b', added)
         // console.log('prevRoom', prevRoom)
         if(Object.keys(prevRoom).length > 0 )
         {
