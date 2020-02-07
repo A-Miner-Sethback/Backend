@@ -7,7 +7,7 @@ module.exports =
     addUser,
     getAllforUser,
     updateRoom,
-    travel
+    travel,
 }
 
 async function findById(id) { 

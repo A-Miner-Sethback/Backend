@@ -4,6 +4,9 @@ const restricted = require('../utils/restricted')
 const cors = require('cors')
 const axios = require('axios')
 
+const mineFunc = require('../utils/mining')
+
+
 router.use(cors())
 
 router.get('/:userId', restricted, (req, res) =>
@@ -106,6 +109,22 @@ router.put('/:userId', restricted, (req, res) =>
         .catch(error =>
         {
             res.status(500).json(error)
+        })
+})
+
+router.post('/:userId/mine', restricted, (req, res) =>
+{
+    let {last_proof, difficulty} = req.body
+    
+    mineFunc(last_proof, difficulty)
+        .then(response =>
+        {
+            console.log('response from mine', response)
+            res.status(200).json(response)
+        })
+        .catch(error =>
+        {
+            res.status(500).json({errorMessage: 'ERROR, something something mining problem'})
         })
 })
 
